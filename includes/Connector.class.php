@@ -154,7 +154,11 @@ class AC_Connector {
 		}
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
+
+        // Check if followlocation can be used
+        if (!ini_get('open_basedir')) {
+            curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
+        }
 
 		$response = curl_exec($request);
 
